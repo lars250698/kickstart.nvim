@@ -1,5 +1,11 @@
+local vim = vim
+local opt = vim.opt
+
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+
+opt.foldmethod = 'expr'
+opt.foldexpr = 'nvim_treesitter#foldexpr()'
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
