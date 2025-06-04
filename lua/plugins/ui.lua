@@ -114,6 +114,11 @@ return {
           lualine_c = {},
           lualine_x = {},
           lualine_y = {},
+          lualine_z = {
+            function()
+              return ' ' .. os.date '%R'
+            end,
+          },
         },
       }
 
@@ -171,6 +176,7 @@ return {
           theme = theme,
           component_separators = '',
           section_separators = { left = '', right = '' },
+          globalstatus = true,
         },
         sections = {
           lualine_a = { mode },
