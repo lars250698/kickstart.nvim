@@ -16,13 +16,6 @@ return {
       -- - sd'   - [S]urround [D]elete [']quotes
       -- - sr)'  - [S]urround [R]eplace [)] [']
       require('mini.surround').setup()
-
-      require('mini.animate').setup {
-        cursor = {
-          enabled = false,
-        },
-      }
-
       require('mini.comment').setup()
       require('mini.trailspace').setup()
       require('mini.cursorword').setup()

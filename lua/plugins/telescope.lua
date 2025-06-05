@@ -40,8 +40,10 @@ return {
       vim.keymap.set('n', '<leader>/', builtin.live_grep, { desc = '[/] Grep' })
       vim.keymap.set('n', '<leader><space>', builtin.find_files, { desc = 'Find [F]iles' })
       vim.keymap.set('n', '<leader>,', builtin.buffers, { desc = 'Find [B]uffers' })
-      vim.keymap.set('n', '<leader>q', builtin.quickfix, { desc = 'Quickfix list' })
-      vim.keymap.set('n', '<leader>d', builtin.diagnostics, { desc = 'Diagnostics list' })
+      vim.keymap.set('n', '<leader>fq', builtin.quickfix, { desc = 'Quickfix list' })
+      vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = 'Diagnostics list' })
+      vim.keymap.set('n', '<leader>fs', builtin.search_history, { desc = '[S]earch history' })
+      vim.keymap.set('n', '<leader>ft', builtin.treesitter, { desc = '[T]reesitter' })
     end,
   },
 }

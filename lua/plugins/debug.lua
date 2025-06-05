@@ -55,11 +55,11 @@ return {
       desc = 'Debug: Step Out',
     },
     {
-      '<leader>b',
+      '<leader>bp',
       function()
         require('dap').toggle_breakpoint()
       end,
-      desc = 'Debug: Toggle Breakpoint',
+      desc = 'Debug: Toggle [B]reak[p]oint',
     },
     {
       '<leader>B',
@@ -144,5 +144,71 @@ return {
         detached = vim.fn.has 'win32' == 0,
       },
     }
+
+    -- Configure the JavaScript/TypeScript adapter
+    dap.adapters['pwa-node'] = {
+      type = 'server',
+      host = 'localhost',
+      port = '${port}',
+      executable = {
+        command = 'node',
+        args = {
+          require('mason-registry').get_package('js-debug-adapter'):get_install_path() .. '/js-debug/src/dapDebugServer.js',
+          '${port}',
+        },
+      },
+    }
+
+    -- Configuration for debugging Node.js/TypeScript applications
+    dap.configurations.typescript = {
+      {
+        type = 'pwa-node',
+        request = 'launch',
+        name = 'Launch file',
+        program = '${file}',
+        cwd = '${workspaceFolder}',
+      },
+      {
+        type = 'pwa-node',
+        request = 'attach',
+        name = 'Attach',
+        processId = require('dap.utils').pick_process,
+        cwd = '${workspaceFolder}',
+      },
+      {
+        type = 'pwa-node',
+        request = 'launch',
+        name = 'Debug NestJS app',
+        args = { '${workspaceFolder}/src/main.ts' },
+        runtimeArgs = {
+          '--nolazy',
+          '-r',
+          'ts-node/register',
+          '-r',
+          'tsconfig-paths/register',
+        },
+        cwd = '${workspaceFolder}',
+        sourceMaps = true,
+        port = 9229,
+        protocol = 'inspector',
+      },
+      {
+        type = 'pwa-node',
+        request = 'launch',
+        name = 'Debug Jest Tests',
+        runtimeExecutable = 'node',
+        runtimeArgs = {
+          './node_modules/jest/bin/jest.js',
+          '--runInBand',
+        },
+        rootPath = '${workspaceFolder}',
+        cwd = '${workspaceFolder}',
+        console = 'integratedTerminal',
+        internalConsoleOptions = 'neverOpen',
+      },
+    }
+
+    -- Use the same configuration for JavaScript
+    dap.configurations.javascript = dap.configurations.typescript
   end,
 }

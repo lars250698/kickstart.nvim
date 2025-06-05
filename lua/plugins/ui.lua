@@ -99,28 +99,9 @@ return {
         },
       }
 
-      local neotree = {
-        filetypes = { 'neo-tree' },
-        sections = {
-          lualine_a = {
-            {
-              function()
-                return ' ' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':~')
-              end,
-              separator = { left = '', right = '' },
-            },
-          },
-          lualine_b = { 'branch' },
-          lualine_c = {},
-          lualine_x = {},
-          lualine_y = {},
-          lualine_z = {
-            function()
-              return ' ' .. os.date '%R'
-            end,
-          },
-        },
-      }
+      local time = function()
+        return ' ' .. os.date '%R'
+      end
 
       local mode = {
         'mode',
@@ -147,6 +128,30 @@ return {
         end,
       }
 
+      local filetype = {
+        'filetype',
+        icon_only = true,
+        separator = '',
+        padding = {
+          left = 2,
+          right = 0,
+        },
+      }
+
+      local filename = {
+        'filename',
+        file_status = true,
+        path = 1,
+        newfile_status = true,
+        shorting_target = 50,
+        symbols = {
+          modified = '[+]', -- Text to show when the file is modified.
+          readonly = '[-]', -- Text to show when the file is non-modifiable or readonly.
+          unnamed = '[No Name]', -- Text to show for unnamed buffers.
+          newfile = '[New]', -- Text to show for newly created file before first write
+        },
+      }
+
       local noice_status = {
         function()
           return require('noice').api.status.command.get()
@@ -171,6 +176,25 @@ return {
         end,
       }
 
+      local neotree = {
+        filetypes = { 'neo-tree' },
+        sections = {
+          lualine_a = {
+            {
+              function()
+                return ' ' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':~')
+              end,
+              separator = { left = '', right = '' },
+            },
+          },
+          lualine_b = { 'branch' },
+          lualine_c = {},
+          lualine_x = {},
+          lualine_y = {},
+          lualine_z = { time },
+        },
+      }
+
       return {
         options = {
           theme = theme,
@@ -182,7 +206,8 @@ return {
           lualine_a = { mode },
           lualine_b = { 'branch' },
           lualine_c = {
-            { 'filetype', icon_only = true, separator = '', padding = { left = 1, right = 0 } },
+            filetype,
+            filename,
           },
           lualine_x = {
             Snacks.profiler.status(),
@@ -191,16 +216,14 @@ return {
             diff,
           },
           lualine_y = {
+            { 'trouble', separator = ' ', padding = { left = 1, right = 0 } },
             { 'progress', separator = ' ', padding = { left = 1, right = 0 } },
             { 'location', padding = { left = 0, right = 1 } },
           },
-          lualine_z = {
-            function()
-              return ' ' .. os.date '%R'
-            end,
-          },
+          lualine_z = { time },
         },
         extensions = {
+          'trouble',
           'lazy',
           neotree,
         },
