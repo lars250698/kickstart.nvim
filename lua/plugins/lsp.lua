@@ -37,6 +37,22 @@ return {
             vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
           end
 
+          -- diagnostic
+          local diagnostic_goto = function(next, severity)
+            local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
+            severity = severity and vim.diagnostic.severity[severity] or nil
+            return function()
+              go { severity = severity }
+            end
+          end
+
+          map('<leader>cd', vim.diagnostic.open_float, 'Line Diagnostics')
+          map(']d', diagnostic_goto(true), 'Next Diagnostic')
+          map('[d', diagnostic_goto(false), 'Prev Diagnostic')
+          map(']e', diagnostic_goto(true, 'ERROR'), 'Next Error')
+          map('[e', diagnostic_goto(false, 'ERROR'), 'Prev Error')
+          map(']w', diagnostic_goto(true, 'WARN'), 'Next Warning')
+          map('[w', diagnostic_goto(false, 'WARN'), 'Prev Warning')
           map('<leader>cr', vim.lsp.buf.rename, '[R]ename')
           map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ctions', { 'n', 'x' })
           map('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
