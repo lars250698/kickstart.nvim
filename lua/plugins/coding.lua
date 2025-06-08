@@ -1,37 +1,43 @@
 return {
+  -- Snippet Engine
+  {
+    'L3MON4D3/LuaSnip',
+    version = '2.*',
+    build = (function()
+      -- Build Step is needed for regex support in snippets.
+      -- This step is not supported in many windows environments.
+      -- Remove the below condition to re-enable on windows.
+      if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then
+        return
+      end
+      return 'make install_jsregexp'
+    end)(),
+    dependencies = {},
+    opts = {},
+    config = function(_, opts)
+      require('luasnip').setup()
+      require('luasnip.loaders.from_snipmate').lazy_load {}
+    end,
+  },
+  {
+    'supermaven-inc/supermaven-nvim',
+    opts = {
+      disable_keymaps = true,
+      keymaps = {
+        accept_suggestion = nil,
+      },
+      disable_inline_completion = vim.g.ai_cmp,
+      ignore_filetypes = { 'bigfile', 'snacks_input', 'snacks_notif', 'markdown' },
+    },
+  },
   { -- Autocompletion
     'saghen/blink.cmp',
     event = 'VimEnter',
     version = '1.*',
     dependencies = {
-      -- Snippet Engine
-      {
-        'L3MON4D3/LuaSnip',
-        version = '2.*',
-        build = (function()
-          -- Build Step is needed for regex support in snippets.
-          -- This step is not supported in many windows environments.
-          -- Remove the below condition to re-enable on windows.
-          if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then
-            return
-          end
-          return 'make install_jsregexp'
-        end)(),
-        dependencies = {},
-        opts = {},
-      },
+      'L3MON4D3/LuaSnip',
       'folke/lazydev.nvim',
-      {
-        'supermaven-inc/supermaven-nvim',
-        opts = {
-          disable_keymaps = true,
-          keymaps = {
-            accept_suggestion = nil,
-          },
-          disable_inline_completion = vim.g.ai_cmp,
-          ignore_filetypes = { 'bigfile', 'snacks_input', 'snacks_notif', 'markdown' },
-        },
-      },
+      'supermaven-inc/supermaven-nvim',
       {
         'saghen/blink.compat',
         -- use v2.* for blink.cmp v1.*

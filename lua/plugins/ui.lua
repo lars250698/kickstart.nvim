@@ -1,5 +1,11 @@
 return {
   {
+    'sphamba/smear-cursor.nvim',
+    opts = {
+      smear_insert_mode = false,
+    },
+  },
+  {
     'catppuccin/nvim',
     priority = 1000, -- Make sure to load this before all the other start plugins.
     config = function()
