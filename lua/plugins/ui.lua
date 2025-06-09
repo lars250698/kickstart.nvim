@@ -182,24 +182,24 @@ return {
         end,
       }
 
-      local neotree = {
-        filetypes = { 'neo-tree' },
-        sections = {
-          lualine_a = {
-            {
-              function()
-                return ' ' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':~')
-              end,
-              separator = { left = '', right = '' },
-            },
-          },
-          lualine_b = { 'branch' },
-          lualine_c = {},
-          lualine_x = {},
-          lualine_y = {},
-          lualine_z = { time },
-        },
-      }
+      -- local neotree = {
+      --   filetypes = { 'neo-tree' },
+      --   sections = {
+      --     lualine_a = {
+      --       {
+      --         function()
+      --           return ' ' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':~')
+      --         end,
+      --         separator = { left = '', right = '' },
+      --       },
+      --     },
+      --     lualine_b = { 'branch' },
+      --     lualine_c = {},
+      --     lualine_x = {},
+      --     lualine_y = {},
+      --     lualine_z = { time },
+      --   },
+      -- }
 
       return {
         options = {
@@ -231,7 +231,7 @@ return {
         extensions = {
           'trouble',
           'lazy',
-          neotree,
+          -- neotree,
         },
       }
     end,
