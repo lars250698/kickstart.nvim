@@ -21,6 +21,33 @@ return {
           cmp = true,
           gitsigns = true,
           notify = true,
+          flash = true,
+          indent_blankline = {
+            enabled = true,
+            scope_color = 'lavender',
+            colored_indent_levels = true,
+          },
+          native_lsp = {
+            enabled = true,
+            underlines = {
+              errors = { 'undercurl' },
+              hints = { 'undercurl' },
+              warnings = { 'undercurl' },
+              information = { 'undercurl' },
+            },
+          },
+          noice = true,
+          snacks = true,
+          treesitter = true,
+          treesitter_context = true,
+          which_key = true,
+          blink_cmp = {
+            style = 'bordered',
+          },
+          harpoon = true,
+          markview = true,
+          nvim_surround = true,
+          rainbow_delimiters = true,
         },
       }
 
