@@ -22,11 +22,12 @@ return {
   {
     'supermaven-inc/supermaven-nvim',
     opts = {
-      disable_keymaps = true,
+      -- disable_keymaps = true,
       keymaps = {
-        accept_suggestion = nil,
+        accept_suggestion = '<Tab>',
+        accept_word = '<C-j>',
+        clear_suggestion = '<C-]>',
       },
-      disable_inline_completion = vim.g.ai_cmp,
       ignore_filetypes = { 'bigfile', 'snacks_input', 'snacks_notif', 'markdown' },
     },
   },

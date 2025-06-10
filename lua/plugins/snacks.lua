@@ -32,7 +32,6 @@ return {
       },
       indent = { enabled = true },
       quickfile = { enabled = true },
-      scroll = { enabled = true },
       words = { enabled = true },
       scroll = {
         animate = {
@@ -50,6 +49,18 @@ return {
           return vim.g.snacks_scroll ~= false and vim.b[buf].snacks_scroll ~= false and vim.bo[buf].buftype ~= 'terminal'
         end,
       },
+      picker = {
+        win = {
+          input = {
+            keys = {
+              ['<Esc>'] = { 'close', mode = { 'n', 'i' } },
+            },
+          },
+        },
+      },
+      input = { enabled = true },
+      notifier = { enabled = true },
+      scope = { enabled = true },
     },
     keys = {
       {
@@ -65,6 +76,62 @@ return {
           Snacks.bufdelete.other()
         end,
         desc = 'Delete all Buffers except Current',
+      },
+      {
+        '<leader>/',
+        function()
+          Snacks.picker.grep()
+        end,
+        desc = '[/] Grep',
+      },
+      {
+        '<leader><space>',
+        function()
+          Snacks.picker.files()
+        end,
+        desc = 'Find Files',
+      },
+      {
+        '<leader>,',
+        function()
+          Snacks.picker.buffers()
+        end,
+        desc = 'Find Buffers',
+      },
+      {
+        '<leader>fq',
+        function()
+          Snacks.picker.quickfix()
+        end,
+        desc = 'Quickfix list',
+      },
+      {
+        '<leader>fd',
+        function()
+          Snacks.picker.diagnostics()
+        end,
+        desc = 'Diagnostics list',
+      },
+      {
+        '<leader>fs',
+        function()
+          Snacks.picker.search_history()
+        end,
+        desc = 'Search history',
+      },
+      {
+        '<leader>ft',
+        function()
+          Snacks.picker.treesitter()
+        end,
+        desc = 'Treesitter',
+      },
+      {
+        '<leader>fr',
+        function()
+          Snacks.picker.recent()
+        end,
+        desc = 'Recent',
       },
     },
   },
